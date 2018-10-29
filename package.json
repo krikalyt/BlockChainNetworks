@@ -1,0 +1,16 @@
+{
+  "name": "blockchain",
+  "version": "1.0.0",
+  "description": "Simple blockchain application",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "node app.js"
+  },
+  "author": "Krishna",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "node-fetch": "^2.2.0"
+  }
+}
