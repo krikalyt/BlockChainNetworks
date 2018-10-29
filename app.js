@@ -23,6 +23,9 @@ app.get("/adddata/:data",async (req,res)=>{
 
 //this router will use in adding data to datalist
 app.get("/datalist/:data",(req,res)=>{
+    //dont forget to filter IP otherwise anyone can add data to the datalist
+    //this route is for broadcasting data throughput all the network 
+    //so filter ip and allows only yorself to broadcast
     var data = req.params.data;
     datalist.addData(data);
     res.send("done");
