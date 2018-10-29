@@ -3,8 +3,7 @@ var DataList = require("./datalist");
 var app = express();
 var fetch = require('node-fetch');
 var datalist = new DataList();
-var connection = ['http://localhost:3000','http://localhost:3001','http://localhost:3002','http://localhost:3003'];
-
+var connection = ['http://127.0.0.1:3000','http://127.0.0.1:3001','http://127.0.0.1:3002','http://127.0.0.1:3003'];
 
 //this router will use to receive the data from client and it will broadcast the data through all the network using http request
 app.get("/adddata/:data",async (req,res)=>{
@@ -23,9 +22,15 @@ app.get("/adddata/:data",async (req,res)=>{
 
 //this router will use in adding data to datalist
 app.get("/datalist/:data",(req,res)=>{
-    var data = req.params.data;
-    datalist.addData(data);
-    res.send("done");
+    var trustedIps = ['127.0.0.1'];
+    var requestIP = req.connection.remoteAddress;
+    if(trustedIps.indexOf(requestIP) >= 0) {
+        var data = req.params.data;
+        datalist.addData(data);
+        res.send("done");
+    } else {
+        res.status(404).send("you are now allowed");
+    }
 });
 
 
@@ -37,7 +42,7 @@ app.get("/all",(req,res)=>{
 
 //for listen
 var port = process.env.PORT || 3000;
-app.listen(port,(err)=>{
+app.listen(port,'0.0.0.0',(err)=>{
     try{
         if(err){return console.log("Unable to start the server")};
         console.log("Server has been started at port no "+port);
