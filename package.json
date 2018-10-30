@@ -11,6 +11,7 @@
   "author": "Krishna",
   "license": "ISC",
   "dependencies": {
+    "circular-json": "^0.5.9",
     "express": "^4.16.4",
     "express-ipfilter": "^0.3.1",
     "node-fetch": "^2.2.0"

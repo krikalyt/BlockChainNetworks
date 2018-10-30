@@ -1,5 +1,6 @@
 var blockchain = require("./blockchain");
 var blockc = new blockchain();
+var fetch = require("node-fetch");
 
 
 class DataList{
@@ -11,10 +12,17 @@ class DataList{
     addData(data){
         this.Data.push(data);
         if(this.getLength()>=5 && this.mineblock==null){
-            this.mineblock = blockc.generateBlock(this.getDataformine());
-            blockc.insertBlock(this.mineblock);
-            this.mineblock=null;
+            this.startMine();
         }
+    }
+
+    startMine(){
+        this.mineblock = blockc.generateBlock(this.getDataformine());
+    };
+
+    inserttoblockchain(){
+        blockc.insertBlock(this.mineblock);
+        this.mineblock=null;
     }
 
     getLength(){
@@ -31,6 +39,22 @@ class DataList{
 
     getTheblocksData(){
         return blockc.getAllData();
+    }
+
+    getMinedblockHash(){
+        if(this.mineblock==null){
+            return null;
+        }
+        return this.mineblock.getHash();
+    }
+
+    getCompleteBlockChain(){
+        return blockc.genesis;
+    }
+
+    setCompleteBlockchain(data){
+        blockc.genesis = data;
+        this.mineblock = null;
     }
 }
 
